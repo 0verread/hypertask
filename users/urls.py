@@ -13,7 +13,7 @@ urlpatterns = [
   path("login", CustomTokenObtainPairView.as_view(), name="token_obtain_pair"),
 #   path("login/refresh", jwt_views.TokenRefreshView.as_view(), name="token_refresh"),
   path("logout", LogoutView.as_view(), name="auth_logout"),
-  path("changepass", ChangePasswordView.as_view(), name="change_password"),
+  path("change-pass", ChangePasswordView.as_view(), name="change_password"),
   
   # User Info URL
   path("user", AccountView.as_view()),
