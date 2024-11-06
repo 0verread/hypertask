@@ -2,6 +2,11 @@
 
 REST APIs for TODO list using Django Rest Framework
 
+#### Table of Contents
+[Technologies Used](#technologies-used)<br>
+[APIs](#apis)<br>
+
+
 ### Technologies Used
 
 - Python3
@@ -20,3 +25,10 @@ REST APIs for TODO list using Django Rest Framework
 | `GET /api/v1/tasks/:id` | Retrieve task details associated with the id and the authenticated user. |
 | `POST /api/v1/tasks` | Toggle a task's completed status. |
 
+### TODO:
+
+- [] Test /change-pass, login/refresh apis
+
+- [] document users/views.py, users/auth/api.py
+
+- [] requirement.text
