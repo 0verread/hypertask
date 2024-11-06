@@ -1,0 +1,12 @@
+asgiref==3.8.1
+django==5.1.2
+django-rest-framework==0.1.0
+djangorestframework==3.15.2
+djangorestframework-simplejwt==5.3.1
+gunicorn==23.0.0
+packaging==24.1
+psycopg2-binary==2.9.10
+pyjwt==2.9.0
+python-dotenv==1.0.1
+rest-framework-simplejwt==0.0.2
+sqlparse==0.5.1
