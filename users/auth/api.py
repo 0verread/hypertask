@@ -6,10 +6,9 @@ from rest_framework.response import Response
 from users.models import CustomUser
 from .serializer import RegisterAccountSerializer, ChangePasswordSerializer
 
-
 class RegisterAccountView(APIView):
   def post(self, request):
-    email = request.data.get('email', '')
+    email = request.data.get('email')
     # existing user with same email check
     if CustomUser.objects.filter(email=email).exists():
       return Response({'error': 'Email already registered'}, status=status.HTTP_400_BAD_REQUEST)

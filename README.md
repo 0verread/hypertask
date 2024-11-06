@@ -2,10 +2,9 @@
 
 REST APIs for TODO list using Django Rest Framework
 
-### Table of Contents
-[Technologies Used](#technologies-used)
-
-[APIs](#apis)
+#### Table of Contents
+[Technologies Used](#technologies-used)<br>
+[APIs](#apis)<br>
 
 
 ### Technologies Used
@@ -28,8 +27,8 @@ REST APIs for TODO list using Django Rest Framework
 
 ### TODO:
 
-- [ ] Test /change-pass, login/refresh apis
+- [] Test /change-pass, login/refresh apis
 
-- [ ] document users/views.py, users/auth/api.py
+- [] document users/views.py, users/auth/api.py
 
-- [ ] requirement.text
+- [] requirement.text
