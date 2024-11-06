@@ -67,6 +67,9 @@ Note that I time boxed myself 1 day to complete this task. So it will be easy ev
 
     To test entire system for basic operations against every breaking changes, I wrote a test bash script that you can find in scrips dir. run `./scripts/test.sh`
 
+- **CI/CD**
+    I couldn't setup some simple CI/CD but time did not allow me. 
+
 ### Design Decision
 
 I wanted to make this application as close as a production level app, that's why I chose to have my own custom id ( primary key) taht is generated based Stipe's custom Id convention [link](https://gist.github.com/fnky/76f533366f75cf75802c8052b577e2a5)
