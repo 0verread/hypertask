@@ -16,7 +16,7 @@ class UserProfileManager(BaseUserManager):
 
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
-	id = models.CharField(max_length=100, primary_key=True, editable=False, default=lambda: generate_custom_id(prefix="ord_", length=10))
+	id = models.CharField(max_length=100, primary_key=True, editable=False, default=lambda: generate_custom_id(prefix="usr_", length=10))
 	username = None
 	name = models.CharField(max_length=100)
 	email = models.EmailField(max_length=255, unique=True)
