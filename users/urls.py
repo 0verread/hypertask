@@ -9,13 +9,12 @@ from .views import CustomTokenObtainPairView, AccountView
 
 urlpatterns = [
   # User Auth URLS
-  path("register", RegisterAccountView.as_view()),
-  path("login", CustomTokenObtainPairView.as_view(), name="token_obtain_pair"),
-#   path("login/refresh", jwt_views.TokenRefreshView.as_view(), name="token_refresh"),
-  path("logout", LogoutView.as_view(), name="auth_logout"),
-  path("change-pass", ChangePasswordView.as_view(), name="change_password"),
-  
-  # User Info URL
-  path("user", AccountView.as_view()),
+  path("users/register", RegisterAccountView.as_view()),
+  path("users/login", CustomTokenObtainPairView.as_view(), name="token_obtain_pair"),
+  # get new access token using refresh token,  
+  path("users/login/token-refresh", jwt_views.TokenRefreshView.as_view(), name="token_refresh"),
+  path("users/logout", LogoutView.as_view(), name="auth_logout"),
+  path("users/change-pass", ChangePasswordView.as_view(), name="change_password"),
+  path("users/me", AccountView.as_view()),
 ]
 

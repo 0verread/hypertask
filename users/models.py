@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
 
-from utils.id_generator import generate_custom_id
+from utils.id_generator import generate_custom_user_id
 
 class UserProfileManager(BaseUserManager):
 	use_in_migration = True
@@ -16,7 +16,7 @@ class UserProfileManager(BaseUserManager):
 
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
-	id = models.CharField(max_length=100, primary_key=True, editable=False, default=lambda: generate_custom_id(prefix="usr_", length=10))
+	id = models.CharField(max_length=14, primary_key=True, editable=False, default= generate_custom_user_id)
 	username = None
 	name = models.CharField(max_length=100)
 	email = models.EmailField(max_length=255, unique=True)
