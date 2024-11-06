@@ -7,24 +7,24 @@ from .models import Task
 from .serializers import TaskSerializer, TaskStatusUpdateSerializer, TaskDeleteSerializer
 
 class TodoListCreateView(APIView):
-    """
-    View to list all Todos for the authenticated user and create a new Todo.
-    """
-    permission_classes = [IsAuthenticated]
+  """
+  View to list all Todos for the authenticated user and create a new Todo.
+  """
+  permission_classes = [IsAuthenticated]
 
-    def get(self, request):
-        """List all tasks ( that are not deleted) for the authenticated user"""
-        todos = Task.objects.filter(user=request.user).filter(is_deleted=False)
-        serializer = TaskSerializer(todos, many=True)
-        return Response(serializer.data)
+  def get(self, request):
+      """List all tasks ( that are not deleted) for the authenticated user"""
+      todos = Task.objects.filter(user=request.user).filter(is_deleted=False)
+      serializer = TaskSerializer(todos, many=True)
+      return Response(serializer.data)
 
-    def post(self, request):
-        """Create a new todo for the authenticated user"""
-        serializer = TaskSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save(user=request.user)
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+  def post(self, request):
+      """Create a new todo for the authenticated user"""
+      serializer = TaskSerializer(data=request.data)
+      if serializer.is_valid():
+          serializer.save(user=request.user)
+          return Response(serializer.data, status=status.HTTP_201_CREATED)
+      return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class TodoDetailView(APIView):
     """
@@ -117,3 +117,105 @@ class TodoStatusUpdateView(APIView):
       serializer.save()
       return Response(serializer.data)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+  
+
+class BulkUpdateTaskStatusView(APIView):
+    """
+    API endpoint to bulk update the status of multiple tasks for the authenticated user.
+    """
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+      """
+      POST request to update the status of multiple tasks.
+      - Request body should contain 'task_ids' (list of task IDs) and 'status'.
+      """
+      task_ids = request.data.get("task_ids")
+      status_to_update = request.data.get("status")
+
+      # Validate request data
+      if not task_ids or not isinstance(task_ids, list):
+          return Response(
+              {"error": "Invalid input. 'task_ids' must be a list of task IDs."},
+              status=status.HTTP_400_BAD_REQUEST
+          )
+
+      if not status_to_update:
+          return Response(
+              {"error": "Missing 'status' field. Provide a status to update tasks."},
+              status=status.HTTP_400_BAD_REQUEST
+          )
+
+      # Retrieve tasks belonging to the user from the provided task_ids
+      user_tasks = Task.objects.filter(user=request.user, id__in=task_ids, is_deleted=False)
+
+      # Perform the update for valid tasks
+      updated_count = 0
+      ignored_count = len(task_ids) - user_tasks.count()
+      errors = []
+
+      for task in user_tasks:
+          try:
+              task.status = status_to_update
+              task.save()
+              updated_count += 1
+          except Exception as e:
+              # Collect any errors encountered during the update
+              errors.append({"task_id": task.id, "error": str(e)})
+
+      # Construct the response
+      response_data = {
+          "updated_count": updated_count,
+          "ignored_count": ignored_count,
+          "errors": errors
+      }
+
+      return Response(response_data, status=status.HTTP_200_OK)
+
+
+class BulkDeleteTasksView(APIView):
+    """
+    API endpoint to bulk delete multiple tasks for the authenticated user.
+    """
+    permission_classes = [IsAuthenticated]
+
+    def delete(self, request):
+      """
+      POST request to update the status of multiple tasks.
+      - Request body should contain 'task_ids' (list of task IDs).
+      """
+      task_ids = request.data.get("task_ids")
+
+      # Validate request data
+      if not task_ids or not isinstance(task_ids, list):
+          return Response(
+              {"error": "Invalid input. 'task_ids' must be a list of task IDs."},
+              status=status.HTTP_400_BAD_REQUEST
+          )
+
+      # Retrieve tasks belonging to the user from the provided task_ids
+      user_tasks = Task.objects.filter(user=request.user, id__in=task_ids, is_deleted=False)
+
+      # Perform the update for valid tasks
+      updated_count = 0
+      ignored_count = len(task_ids) - user_tasks.count()
+      errors = []
+
+      for task in user_tasks:
+          try:
+              task.is_deleted = True
+              task.save()
+              updated_count += 1
+          except Exception as e:
+              # Collect any errors encountered during the update
+              errors.append({"task_id": task.id, "error": str(e)})
+
+      # Construct the response
+      response_data = {
+          "updated_count": updated_count,
+          "ignored_count": ignored_count,
+          "errors": errors
+      }
+
+      return Response(response_data, status=status.HTTP_200_OK)
+
