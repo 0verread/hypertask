@@ -6,7 +6,7 @@ from rest_framework.response import Response
 from .models import Task
 from .serializers import TaskSerializer, TaskStatusUpdateSerializer, TaskDeleteSerializer
 
-class TodoListCreateView(APIView):
+class TaskListCreateView(APIView):
   """
   View to list all Todos for the authenticated user and create a new Todo.
   """
@@ -26,7 +26,7 @@ class TodoListCreateView(APIView):
           return Response(serializer.data, status=status.HTTP_201_CREATED)
       return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-class TodoDetailView(APIView):
+class TaskDetailView(APIView):
     """
     View to retrieve, update, or delete a specific Todo item.
     """
@@ -97,7 +97,7 @@ class TodoDetailView(APIView):
          return Response(serializer.data)
       return Response(status=status.HTTP_204_NO_CONTENT)
 
-class TodoStatusUpdateView(APIView):
+class TaskStatusUpdateView(APIView):
   """
   View to update the status of a specific Task item.
   """
@@ -172,7 +172,6 @@ class BulkUpdateTaskStatusView(APIView):
 
       return Response(response_data, status=status.HTTP_200_OK)
 
-
 class BulkDeleteTasksView(APIView):
     """
     API endpoint to bulk delete multiple tasks for the authenticated user.
@@ -181,7 +180,7 @@ class BulkDeleteTasksView(APIView):
 
     def delete(self, request):
       """
-      POST request to update the status of multiple tasks.
+      POST request to delete multiple tasks.
       - Request body should contain 'task_ids' (list of task IDs).
       """
       task_ids = request.data.get("task_ids")
