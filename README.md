@@ -51,7 +51,7 @@ python3 manage.py test
 
 ### Tradeoffs for time
 
-Note that I time boxed myself 1 day to complete this task. So it will be easy evaluate whole better way.
+Note that I time boxed myself 1 day to complete this task. So it will be easy evaluate.
 
 - **Imperfect Authentication**
 
@@ -72,9 +72,9 @@ Note that I time boxed myself 1 day to complete this task. So it will be easy ev
 
 ### Design Decision
 
-I wanted to make this application as close as a production level app, that's why I chose to have my own custom id ( primary key) taht is generated based Stipe's custom Id convention [link](https://gist.github.com/fnky/76f533366f75cf75802c8052b577e2a5)
+I wanted to make this application as close as a production level app, that's why I chose to have my own custom id ( primary key) that is generated based on Stipe's custom Id convention [link](https://gist.github.com/fnky/76f533366f75cf75802c8052b577e2a5)
 
-26 uppercase letters (A-Z), 26 uppercase letters (A-Z), 10 digits (0-9) so there are a total of 62 choices for each character, that gives 62^10 = 839 quadrillion unique ids for users and 62^12 > 3 sextillion unique ids for tasks. so we will fine , not to think about collision for near future
+26 uppercase letters (A-Z), 26 lowercase letters (a-z), 10 digits (0-9) so there are a total of 62 choices for each character, that gives 62^10 = 839 quadrillion unique ids for users and 62^12 > 3 sextillion unique ids for tasks. so we will fine , not to think about collision for near future
 
 ### Deployment
 
